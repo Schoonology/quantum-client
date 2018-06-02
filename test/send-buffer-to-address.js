@@ -7,8 +7,10 @@ test('sendBufferToAddress writes buffer to socket', t => {
   const socket = new EventEmitter()
   socket.setNoDelay = td.function()
   socket.write = td.function()
+  socket.end = td.function()
 
   process.nextTick(() => socket.emit('connect'))
+  process.nextTick(() => socket.emit('close'))
 
   return sendBufferToAddress('address', 'buffer', { socket })
     .then(() => {

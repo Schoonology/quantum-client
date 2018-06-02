@@ -5,8 +5,9 @@ const test = require('ava')
 
 test('addressFromDeviceId resolves with udpinfo from matching beacon', t => {
   const socket = new EventEmitter()
-  socket.bind = td.function()
   socket.addMembership = td.function()
+  socket.bind = td.function()
+  socket.close = td.function()
 
   process.nextTick(() => socket.emit('message', new Buffer('wrong id'), { address: 'wrong address'}))
   process.nextTick(() => socket.emit('message', new Buffer('correct id'), { address: 'correct address'}))
@@ -18,7 +19,6 @@ test('addressFromDeviceId resolves with udpinfo from matching beacon', t => {
 test('addressFromDeviceId forwards errors', t => {
   const socket = new EventEmitter()
   socket.bind = td.function()
-  socket.addMembership = td.function()
 
   process.nextTick(() => socket.emit('error', new Error('Oops')))
 
