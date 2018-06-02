@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+
+const deviceId = process.argv[2]
+const bits = process.argv[3]
+const quantum = require('../lib')
+
+if (!deviceId || !bits) {
+  process.stdout.write(`Usage: quantum DEVICE_ID BIT_STRING
+
+Sends BIT_STRING, interpreted as hexidecimal, to DEVICE_ID,
+which should be running the Quantum library.
+
+For more information, see https://github.com/Schoonology/quantum.`)
+  process.exit(1)
+}
+
+quantum.send({ deviceId, bits })
