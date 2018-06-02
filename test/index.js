@@ -9,12 +9,13 @@ test('quantum.send sends bits to the provided deviceID', t => {
   const sendBufferToAddress = td.replace('../lib/send-buffer-to-address')
   const quantum = require('../lib')
 
-  td.when(bitsToBuffer('bits')).thenReturn('buffer')
-  td.when(addressFromDeviceId('device id')).thenResolve('address')
+  td.when(bitsToBuffer('bits')).thenReturn('bits buffer')
+  td.when(bitsToBuffer('device id')).thenReturn('device id buffer')
+  td.when(addressFromDeviceId('device id buffer')).thenResolve('address')
 
   return quantum.send({ deviceId: 'device id', bits: 'bits' })
     .then(() => {
-      td.verify(sendBufferToAddress('address', 'buffer'))
+      td.verify(sendBufferToAddress('address', 'bits buffer'))
       t.pass()
     })
 })
