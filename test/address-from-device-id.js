@@ -7,7 +7,7 @@ test('addressFromDeviceId resolves with udpinfo from matching beacon', t => {
   const socket = new EventEmitter()
   socket.addMembership = td.function()
   socket.bind = td.function()
-  socket.close = td.function()
+  socket.close = function () { this.emit('close') }
 
   process.nextTick(() => socket.emit('message', new Buffer('wrong id'), { address: 'wrong address'}))
   process.nextTick(() => socket.emit('message', new Buffer('correct id'), { address: 'correct address'}))
